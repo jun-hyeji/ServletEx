@@ -72,7 +72,7 @@ public class EmailDaoOrclImpl implements EmailDao {
 		
 		try {
 			conn = getConnection();
-			String wql = "INSERT INTO emaillist" +
+			String sql = "INSERT INTO emaillist" +
 					"(no, last_name, first_name, email) " +
 					"VALUES(seq.emaillist_pk.NEXT, ?, ?, ?) ";
 			pstmt = conn.prepareStatement(sql);
@@ -99,7 +99,7 @@ public class EmailDaoOrclImpl implements EmailDao {
 	public int delete(Long no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		int deleteCount = 0;
+		int deletedCount = 0;
 		
 		try {
 				conn = getConnection();
@@ -109,7 +109,7 @@ public class EmailDaoOrclImpl implements EmailDao {
 				pstmt.setLong(1, no);
 				
 				// 쿼리 수행
-				deleteCount = pstmt.executeUpdate();
+				deletedCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			
 		}finally {

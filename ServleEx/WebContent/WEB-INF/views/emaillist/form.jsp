@@ -12,8 +12,9 @@
 	<p>메일링 리스트에 가입하려면 아래 항목을 기입하고<br/>
 	등록 버튼을 눌러 주세요</p>
 	
-	<form action="insert.jsp"
+	<form action="<%= request.getContextPath() %>/el"
 		method="POST">
+		<input type ="hidden" name="action" value="insert" />	<!-- 숨은 데이터 -->
 		<label for="last_name">성</label>
 		<input type="text" name="last_name" id="last_name" />
 		<br/>
