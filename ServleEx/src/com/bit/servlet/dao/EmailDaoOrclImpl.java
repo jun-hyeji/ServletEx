@@ -46,7 +46,7 @@ public class EmailDaoOrclImpl implements EmailDao {
 					String email = rs.getString(4);
 					Date createAt = rs.getDate(5);	//	java.util.Date
 					
-					EmailVo vo = new EmailVo(no, firstName, lastName, email, createAt);
+					EmailVo vo = new EmailVo(no, lastName, firstName, email, createAt);
 					//	리스트에 추가
 					list.add(vo);
 				}
@@ -66,14 +66,61 @@ public class EmailDaoOrclImpl implements EmailDao {
 
 	@Override
 	public int insert(EmailVo vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int insertedCount = 0;
+		
+		try {
+			conn = getConnection();
+			String wql = "INSERT INTO emaillist" +
+					"(no, last_name, first_name, email) " +
+					"VALUES(seq.emaillist_pk.NEXT, ?, ?, ?) ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getLastName());
+			pstmt.setString(2, vo.getFirstName());
+			pstmt.setString(3, vo.getEmail());
+			
+			insertedCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return insertedCount;
 	}
 
 	@Override
 	public int delete(Long no) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int deleteCount = 0;
+		
+		try {
+				conn = getConnection();
+				String sql = "DELETE FROM emaillist " +
+						"WHRER no = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setLong(1, no);
+				
+				// 쿼리 수행
+				deleteCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return deletedCount;
 	}
 
 }

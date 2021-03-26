@@ -35,6 +35,16 @@
 			<th>이메일</th>
 			<td><%= vo.getEmail() %></td>
 		</tr>
+		<!-- 삭제버튼 -->
+		<tr>
+			<td colspan="2">
+				<form action="delete.jsp">
+				<!-- 게시물의 no(PK) -->
+				<input type = "hidden" name="no" vlaue="<%= vo.getNo() %>"/>
+				<!-- 전송 버튼 -->
+				<input type="submit" value="삭제" />
+				</form>
+			</td>
 	</table>		
 		<%
 	}
